@@ -1,5 +1,5 @@
+using CarPartsStore.Messages;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace CarPartsStore.Controllers;
 
@@ -15,7 +15,16 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("login")]
-    public IActionResult Login()
+    public IActionResult Login(LoginRequest loginRequest)
+    {
+        if (loginRequest.Username == "test")
+            return Ok(new {Username = "test"});
+
+        return BadRequest();
+    }
+    
+    [HttpPost("logout")]
+    public IActionResult Logout()
     {
         return Ok();
     }
