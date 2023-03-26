@@ -1,0 +1,10 @@
+$primary-hue: 20;
+$primary-color: hsl($primary-hue, 30%, 50%);
+
+$body-color: scale-color($primary-color, $saturation: -50%, $lightness: -55%);
+$border-color: scale-color($primary-color, $saturation: -60%, $lightness: -80%);
+
+@mixin border-style {
+  border: solid $border-color 1px;
+  border-radius: 6px;
+}

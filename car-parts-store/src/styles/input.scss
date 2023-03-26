@@ -1,0 +1,49 @@
+@import "./variables.scss";
+
+$input-color: scale-color($primary-color, $lightness: 50%);
+$input-background: scale-color($input-color, $lightness: 50%);
+
+@mixin button {
+  padding: 8px;
+  margin: 4px;
+  color: black;
+  background: $input-background;
+  @include border-style;
+  cursor: pointer;
+
+  &:hover {
+    @include border-style;
+    background: scale-color($input-background, $lightness: -20%);
+  }
+}
+
+button {
+  @include button;
+}
+
+.icon-btn {
+  @include button;
+  color: $input-color;
+  border: none;
+  background: none;
+}
+
+input {
+  @include border-style;
+  height: 1rem;
+  padding: 4px;
+  margin-top: 2px;
+  background-color: $input-background;
+  color: black;
+}
+
+.login-form {
+  position: absolute;
+  right: 4rem;
+  background: $body-color;
+  @include border-style;
+  padding: 4px;
+  margin: 8px;
+  display: flex;
+  flex-direction: column;
+}
