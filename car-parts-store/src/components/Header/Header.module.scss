@@ -1,10 +1,18 @@
 @import "../../styles/variables.scss";
 
 .header {
-  background: scale-color($primary-color, $saturation: -20%, $lightness: -30%);
+  background: $alt-body-color;
   height: 40px;
   width: auto;
   margin: auto;
+}
+
+.title {
+  margin-top: 5px;
+  margin-left: 1rem;
+  font-size: x-large;
+  font-weight: bold;
+  display: inline-block;
 }
 
 .right {

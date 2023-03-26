@@ -24,8 +24,9 @@ button {
 .icon-btn {
   @include button;
   color: $input-color;
-  border: none;
+  border: solid 1px rgba(0, 0, 0, 0);
   background: none;
+  box-sizing: border-box;
 }
 
 input {
@@ -40,7 +41,7 @@ input {
 .login-form {
   position: absolute;
   right: 4rem;
-  background: $body-color;
+  background: $alt-body-color;
   @include border-style;
   padding: 4px;
   margin: 8px;
