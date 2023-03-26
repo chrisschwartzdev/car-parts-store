@@ -3,9 +3,14 @@ $primary-color: hsl($primary-hue, 30%, 50%);
 
 $alt-body-color: scale-color($primary-color, $saturation: -20%, $lightness: -30%);
 $body-color: scale-color($primary-color, $saturation: -50%, $lightness: -55%);
+
 $border-color: scale-color($primary-color, $saturation: -60%, $lightness: -80%);
+$border-radius: 6px;
+
+$link-color: scale-color($primary-color, $lightness: 50%, $saturation: 80%);
+$link-color-hover: lighten($link-color, 15%);
 
 @mixin border-style {
   border: solid $border-color 1px;
-  border-radius: 6px;
+  border-radius: $border-radius;
 }

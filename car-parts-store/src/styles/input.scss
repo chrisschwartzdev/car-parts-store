@@ -15,6 +15,11 @@ $input-background: scale-color($input-color, $lightness: 50%);
     @include border-style;
     background: scale-color($input-background, $lightness: -20%);
   }
+  &:disabled {
+    user-select: none;
+    cursor: initial;
+    background: scale-color($input-background, $alpha: -50%);
+  }
 }
 
 button {
@@ -47,4 +52,14 @@ input {
   margin: 8px;
   display: flex;
   flex-direction: column;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    align-self: flex-end;
+    width: fit-content;
+  }
 }

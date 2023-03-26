@@ -15,10 +15,19 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("login")]
-    public IActionResult Login(LoginRequest loginRequest)
+    public IActionResult Login(LoginRequest request)
     {
-        if (loginRequest.Username == "test")
+        if (request.Username == "test")
             return Ok(new {Username = "test"});
+
+        return BadRequest();
+    }
+
+    [HttpPost("register")]
+    public IActionResult Register(RegisterRequest request)
+    {
+        if (request.Username == "test")
+            return Ok();
 
         return BadRequest();
     }

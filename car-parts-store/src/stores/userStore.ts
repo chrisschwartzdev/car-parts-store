@@ -1,23 +1,33 @@
 import { create } from "zustand";
 import { UserService } from "../services/userService";
-import { LoginData, UserInfo } from "../types";
+import { LoginRequest, RegisterRequest, UserInfo } from "../types";
 
 
 interface UserState {
   user: UserInfo | null;
-  login: (loginRequest: LoginData) => void;
+  login: (request: LoginRequest) => void;
+  register: (request: RegisterRequest) => void;
   logout: () => void;
+  registerSent: boolean;
 }
 
 const userService = new UserService();
 
 const useUserStore = create<UserState>()(set => ({
   user: null,
-  login: async (loginRequest) => {
-    await userService.login(loginRequest)
-      .then((user) => set((state) => ({
+  registerSent: false,
+  login: async request => {
+    await userService.login(request)
+      .then(user => set(state => ({
         ...state,
         user: user
+      })))
+  },
+  register: async request => {
+    await userService.register(request)
+      .then(() => set(state => ({
+        ...state,
+        registerSent: true
       })))
   },
   logout: async () => {
