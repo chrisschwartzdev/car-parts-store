@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import useAppStore from "../../stores/appStore";
 import useUserStore from "../../stores/userStore";
 import { LoginRequest, RegisterRequest } from "../../types";
+import TextInput from "../Input/TextInput";
 
 const RegisterForm = () => {
   const [state, setState] = useState<Partial<RegisterRequest>>();
@@ -27,8 +28,8 @@ const RegisterForm = () => {
 
   return (
     <div className='register-form'>
-      <input placeholder="Username" onChange={e => setState({ ...state, username: e.target.value })} />
-      <input placeholder="Password" onChange={e => setState({ ...state, password: e.target.value })} />
+      <TextInput placeholder="Username" onChange={val => setState({ ...state, username: val })} />
+      <TextInput placeholder="Password" onChange={val => setState({ ...state, password: val })} />
       <button disabled={!valid} onClick={() => register(state as RegisterRequest)}>Submit</button>
     </div>
   )
@@ -41,8 +42,8 @@ const LoginForm = () => {
 
   return (
     <div className="login-form">
-      <input placeholder="Username" value={state.username ?? ''} onChange={e => setState({ ...state, username: e.target.value })} />
-      <input placeholder="Password" type="password" value={state.password ?? ''} onChange={e => setState({ ...state, password: e.target.value })} />
+      <TextInput placeholder="Username" onChange={val => setState({ ...state, username: val })} />
+      <TextInput placeholder="Password" onChange={val => setState({ ...state, password: val })} type="password" />
       <button onClick={() => login(state)}>Login</button>
       <button className='text-button' onClick={() => showModal(<RegisterForm />)}>New here? Register.</button>
     </div>
