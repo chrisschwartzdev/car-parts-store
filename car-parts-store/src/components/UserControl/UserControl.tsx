@@ -4,8 +4,18 @@ import useUserStore from "../../stores/userStore";
 import { LoginRequest, RegisterRequest } from "../../types";
 import TextInput from "../Input/TextInput";
 
+const validateLogin = <T extends RegisterRequest | LoginRequest>({ username, password }: Partial<T>) => {
+  if ((username || '').length < 4)
+    return false;
+  if ((password || '').length < 6)
+    return false;
+
+  return true;
+}
+
 const RegisterForm = () => {
-  const [state, setState] = useState<Partial<RegisterRequest>>();
+  const [state, setState] = useState<Partial<RegisterRequest>>({});
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const register = useUserStore(it => it.register);
   const popModal = useAppStore(it => it.popModal);
   const registerSent = useUserStore(it => it.registerSent);
@@ -15,21 +25,15 @@ const RegisterForm = () => {
       popModal();
   }, [popModal, registerSent])
 
-  const validate = () => {
-    if ((state?.username || '').length < 4)
-      return false;
-    if ((state?.password || '').length < 6)
-      return false;
-
-    return true;
-  }
-
-  const valid = validate();
+  const valid = validateLogin<RegisterRequest>(state);
 
   return (
     <div className='register-form'>
       <TextInput placeholder="Username" onChange={val => setState({ ...state, username: val })} />
-      <TextInput placeholder="Password" onChange={val => setState({ ...state, password: val })} />
+      <div className="display-flex">
+        <TextInput className="flex-grow" placeholder="Password" type={passwordVisible ? undefined : "password"} onChange={val => setState({ ...state, password: val })} />
+        <button className="icon-btn flex-end" onClick={() => setPasswordVisible(!passwordVisible)}><i className="fa fa-eye" /></button>
+      </div>
       <button disabled={!valid} onClick={() => register(state as RegisterRequest)}>Submit</button>
     </div>
   )
@@ -40,12 +44,14 @@ const LoginForm = () => {
   const login = useUserStore(it => it.login);
   const showModal = useAppStore(it => it.showModal);
 
+  const valid = validateLogin<LoginRequest>(state);
+
   return (
     <div className="login-form">
       <TextInput placeholder="Username" onChange={val => setState({ ...state, username: val })} />
       <TextInput placeholder="Password" onChange={val => setState({ ...state, password: val })} type="password" />
-      <button onClick={() => login(state)}>Login</button>
-      <button className='text-button' onClick={() => showModal(<RegisterForm />)}>New here? Register.</button>
+      <button disabled={!valid} onClick={() => login(state)}>Login</button>
+      <button className='text-button' onClick={() => showModal({ component: <RegisterForm />, props: { title: "Register" } })}>New here? Register.</button>
     </div>
   )
 }

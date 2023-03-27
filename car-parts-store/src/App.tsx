@@ -7,15 +7,13 @@ const App = () => {
   const modals = useAppStore(it => it.modals);
   const currentModal = modals.length > 0 ? modals[modals.length - 1] : null;
 
-  console.log(modals.length)
-
   return (
     <div className="App">
       <Header />
       {currentModal && (
         <div id='modal-container' className='modal-container'>
-          <Modal>
-            {currentModal}
+          <Modal title={currentModal.props.title}>
+            {currentModal.component}
           </Modal>
         </div>
       )}

@@ -1,9 +1,9 @@
 import { create } from "zustand";
-
+import { ModalComponent } from "../components/Modal/Modal";
 
 interface AppState {
-  modals: JSX.Element[];
-  showModal: (modal: JSX.Element) => void;
+  modals: ModalComponent[];
+  showModal: (modal: ModalComponent) => void;
   popModal: VoidFunction;
 }
 

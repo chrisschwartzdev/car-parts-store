@@ -11,6 +11,10 @@
   .handle {
     display: inline-block;
     width: 100%;
+    h2 {
+      float: left;
+      width: fit-content;
+    }
   }
 }
 
