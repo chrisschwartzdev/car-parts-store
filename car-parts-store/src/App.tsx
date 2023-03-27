@@ -2,6 +2,7 @@ import './styles/main.scss';
 import Header from './components/Header/Header';
 import useAppStore from './stores/appStore';
 import Modal from './components/Modal/Modal';
+import InventoryManagement from './components/CRUD/Inventory/InventoryManagement';
 
 const App = () => {
   const modals = useAppStore(it => it.modals);
@@ -17,6 +18,7 @@ const App = () => {
           </Modal>
         </div>
       )}
+      <InventoryManagement />
     </div>
   );
 }

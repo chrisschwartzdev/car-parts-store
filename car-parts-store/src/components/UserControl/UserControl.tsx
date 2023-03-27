@@ -16,9 +16,8 @@ const validateLogin = <T extends RegisterRequest | LoginRequest>({ username, pas
 const RegisterForm = () => {
   const [state, setState] = useState<Partial<RegisterRequest>>({});
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const register = useUserStore(it => it.register);
+  const { register, registerSent } = useUserStore(it => ({ register: it.register, registerSent: it.registerSent }));
   const popModal = useAppStore(it => it.popModal);
-  const registerSent = useUserStore(it => it.registerSent);
 
   useEffect(() => {
     if (registerSent)
@@ -58,8 +57,7 @@ const LoginForm = () => {
 
 export const UserControl = () => {
   const [open, setOpen] = useState(false);
-  const user = useUserStore(it => it.user);
-  const logout = useUserStore(it => it.logout);
+  const { user, logout } = useUserStore(it => ({ user: it.user, logout: it.logout }));
 
   useEffect(() => setOpen(false), [user])
 
