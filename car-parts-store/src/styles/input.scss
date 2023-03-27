@@ -32,6 +32,11 @@ button {
   border: solid 1px rgba(0, 0, 0, 0);
   background: none;
   box-sizing: border-box;
+  &:hover {
+    border: solid 1px rgba(0, 0, 0, 0);
+    background: none;
+    color: darken($input-color, 25);
+  }
 }
 
 input {
@@ -41,25 +46,8 @@ input {
   margin-top: 2px;
   background-color: $input-background;
   color: black;
-}
 
-.login-form {
-  position: absolute;
-  right: 4rem;
-  background: $alt-body-color;
-  @include border-style;
-  padding: 4px;
-  margin: 8px;
-  display: flex;
-  flex-direction: column;
-}
-
-.register-form {
-  display: flex;
-  flex-direction: column;
-
-  button {
-    align-self: flex-end;
-    width: fit-content;
+  &:focus {
+    outline: 2px solid lighten($primary-color, 25);
   }
 }

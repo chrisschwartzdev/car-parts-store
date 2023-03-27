@@ -11,7 +11,9 @@
   .handle {
     display: inline-block;
     width: 100%;
+    border-bottom: solid 1px scale-color($primary-color, $saturation: -25%, $lightness: -15%);
     h2 {
+      margin: 0.5rem 0;
       float: left;
       width: fit-content;
     }
@@ -23,10 +25,10 @@
   margin: 0;
   font-size: 1.5rem;
   border: none;
-  color: red;
+  color: $link-color;
   &:hover {
     background: none;
-    color: lighten(red, 30%);
+    color: lighten($link-color, 10%);
     border: none;
   }
 }

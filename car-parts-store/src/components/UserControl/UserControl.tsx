@@ -2,7 +2,9 @@ import { useEffect, useState } from "react"
 import useAppStore from "../../stores/appStore";
 import useUserStore from "../../stores/userStore";
 import { LoginRequest, RegisterRequest } from "../../types";
+import Form from "../Form/Form";
 import TextInput from "../Input/TextInput";
+import styles from './UserControl.module.scss';
 
 const validateLogin = <T extends RegisterRequest | LoginRequest>({ username, password }: Partial<T>) => {
   if ((username || '').length < 4)
@@ -27,14 +29,14 @@ const RegisterForm = () => {
   const valid = validateLogin<RegisterRequest>(state);
 
   return (
-    <div className='register-form'>
-      <TextInput placeholder="Username" onChange={val => setState({ ...state, username: val })} />
+    <Form className={styles.register}>
+      <TextInput placeholder="Username" onChange={val => setState({ ...state, username: val })} autoFocus />
       <div className="display-flex">
         <TextInput className="flex-grow" placeholder="Password" type={passwordVisible ? undefined : "password"} onChange={val => setState({ ...state, password: val })} />
-        <button className="icon-btn flex-end" onClick={() => setPasswordVisible(!passwordVisible)}><i className="fa fa-eye" /></button>
+        <button type="button" className="icon-btn flex-end" onClick={() => setPasswordVisible(!passwordVisible)}><i className="fa fa-eye" /></button>
       </div>
       <button disabled={!valid} onClick={() => register(state as RegisterRequest)}>Submit</button>
-    </div>
+    </Form>
   )
 }
 
@@ -46,12 +48,12 @@ const LoginForm = () => {
   const valid = validateLogin<LoginRequest>(state);
 
   return (
-    <div className="login-form">
-      <TextInput placeholder="Username" onChange={val => setState({ ...state, username: val })} />
+    <Form className={styles.login}>
+      <TextInput placeholder="Username" onChange={val => setState({ ...state, username: val })} autoFocus />
       <TextInput placeholder="Password" onChange={val => setState({ ...state, password: val })} type="password" />
       <button disabled={!valid} onClick={() => login(state)}>Login</button>
-      <button className='text-button' onClick={() => showModal({ component: <RegisterForm />, props: { title: "Register" } })}>New here? Register.</button>
-    </div>
+      <button type="button" className='text-button' onClick={() => showModal({ component: <RegisterForm />, props: { title: "Register" } })}>New here? Register.</button>
+    </Form>
   )
 }
 

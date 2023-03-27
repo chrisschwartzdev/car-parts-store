@@ -2,6 +2,8 @@
 
 $accent-color: scale-color($primary-color, $saturation: 5%);
 
+$table-input-color: #333;
+
 table {
   border-collapse: collapse;
   margin: 25px 0;
@@ -21,9 +23,12 @@ table {
   }
   tbody {
     tr {
-      color: #333;
+      color: $table-input-color;
       button {
-        color: #333 !important;
+        color: $table-input-color !important;
+        &:hover {
+          color: lighten($table-input-color, 25) !important;
+        }
       }
       border-bottom: 1px solid #dddddd;
       &:nth-of-type(even) {

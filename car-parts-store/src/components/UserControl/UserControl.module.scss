@@ -1,0 +1,20 @@
+@import "../../styles/variables.scss";
+
+.login {
+  position: absolute;
+  right: 4rem;
+  background: $alt-body-color;
+  @include border-style;
+  padding: 4px;
+  margin: 8px;
+}
+
+.register {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    align-self: flex-end;
+    width: fit-content;
+  }
+}

@@ -6,9 +6,10 @@ interface TextInputProps {
   onChange?: (val: string) => void;
   type?: HTMLInputTypeAttribute;
   className?: string;
+  autoFocus?: boolean;
 }
 
-const TextInput = ({ initialValue, placeholder, onChange, type, className }: TextInputProps) => {
+const TextInput = ({ initialValue, placeholder, onChange, type, className, autoFocus }: TextInputProps) => {
   const [value, setValue] = useState(initialValue ?? '');
 
   const handleChange = useCallback((val: string) => {
@@ -17,7 +18,7 @@ const TextInput = ({ initialValue, placeholder, onChange, type, className }: Tex
   }, [onChange]);
 
   return (
-    <input className={className} placeholder={placeholder} type={type} onChange={e => handleChange(e.target.value)} value={value} />
+    <input className={className} placeholder={placeholder} type={type} onChange={e => handleChange(e.target.value)} value={value} autoFocus={autoFocus} />
   )
 }
 

@@ -25,6 +25,8 @@ public class UserController : ControllerBase
         if (request.Username == "admin")
             authLevel = 2;
         
+        
+        
         return Ok(new {Username = request.Username, AuthLevel = authLevel});
     }
 
