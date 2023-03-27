@@ -1,6 +1,4 @@
-using System.Net;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarPartsStore
