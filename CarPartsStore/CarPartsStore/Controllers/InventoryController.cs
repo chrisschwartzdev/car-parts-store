@@ -35,4 +35,13 @@ public class InventoryController : ControllerBase
         };
         return Ok(newItem);
     }
+
+    [HttpDelete("deleteItem/{id:int}")]
+    public IActionResult DeleteItem(int id)
+    {
+        if (id == 1)
+            return BadRequest();
+        
+        return Ok();
+    }
 }

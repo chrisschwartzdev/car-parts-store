@@ -38,12 +38,14 @@ const useInventoryStore = create<InventoryState>()(set => ({
         items: state.items.concat([item])
       })))
   },
-  removeItem: (itemId: number) => {
-    set(state => {
-      const itemIndex = state.items.findIndex(it => it.id === itemId);
-      state.items.splice(itemIndex, 1);
-      return ({ ...state, items: state.items })
-    })
+  removeItem: async (itemId: number) => {
+    await inventoryService.removeItem(itemId)
+      .then(() =>
+        set(state => {
+          const itemIndex = state.items.findIndex(it => it.id === itemId);
+          state.items.splice(itemIndex, 1);
+          return ({ ...state, items: state.items })
+        }))
   }
 }))
 

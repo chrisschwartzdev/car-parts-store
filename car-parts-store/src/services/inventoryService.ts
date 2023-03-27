@@ -1,8 +1,9 @@
-import { get, post } from "../ajaxHelper";
+import { apiDelete, apiGet, apiPost } from "../apiHelper";
 import { Item } from "../stores/inventoryStore";
 
 const getInventoryUrl = "inventory";
 const addItemUrl = "inventory/addItem";
+const deleteItemUrl = "inventory/deleteItem";
 
 interface Inventory {
   items: Item[];
@@ -10,7 +11,7 @@ interface Inventory {
 
 export class InventoryService {
   async getItems(): Promise<Inventory> {
-    const response = await get(getInventoryUrl);
+    const response = await apiGet(getInventoryUrl);
 
     if (!response.ok)
       throw Error('Failed to fetch items');
@@ -18,11 +19,17 @@ export class InventoryService {
     return response.data;
   }
   async addItem(request: Omit<Item, 'id'>): Promise<Item> {
-    const response = await post(addItemUrl, request);
+    const response = await apiPost(addItemUrl, request);
 
     if (!response.ok)
-      throw Error('Failed add item');
+      throw Error('Failed to add item');
 
     return response.data;
+  }
+  async removeItem(request: number) {
+    const response = await apiDelete(deleteItemUrl, request.toString());
+
+    if (!response.ok)
+      throw Error('Failed to delete item');
   }
 }

@@ -21,12 +21,17 @@ const getRequestInit = (method: "POST" | "GET" | "PUT" | "DELETE", data?: any): 
 
 const apiRoot = "https://localhost:7024/"
 
-export const post = async (url = "", data = {}) => {
+export const apiPost = async (url = "", data = {}) => {
   const response = await fetch(apiRoot + url, getRequestInit("POST", data));
   return { ok: response.ok, status: response.status, data: await mapResponseData(response) };
 }
 
-export const get = async (url: string) => {
+export const apiGet = async (url: string) => {
   const response = await fetch(apiRoot + url, getRequestInit("GET"));
+  return { ok: response.ok, status: response.status, data: await mapResponseData(response) };
+}
+
+export const apiDelete = async (url = "", query = "") => {
+  const response = await fetch(`${apiRoot}${url}/${query}`, getRequestInit("DELETE"));
   return { ok: response.ok, status: response.status, data: await mapResponseData(response) };
 }
