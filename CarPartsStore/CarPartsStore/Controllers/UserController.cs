@@ -24,9 +24,10 @@ public class UserController : ControllerBase
         
         if (request.Username == "admin")
             authLevel = 2;
+
+        HttpContext.Session.SetInt32(SessionKeys.UserAuthLevelKey, authLevel);
         
-        
-        
+        _logger.LogInformation("User logged in.");
         return Ok(new {Username = request.Username, AuthLevel = authLevel});
     }
 
@@ -40,6 +41,7 @@ public class UserController : ControllerBase
     }
     
     [HttpPost("logout")]
+    [AuthorizeFilter(AuthorizationType.UserAuthLevel, RequiredAuthLevel = AuthLevel.User)]
     public IActionResult Logout()
     {
         return Ok();

@@ -7,6 +7,7 @@ namespace CarPartsStore.Controllers;
 public class InventoryController : ControllerBase
 {
     [HttpGet]
+    [AuthorizeFilter(AuthorizationType.UserAuthLevel, requiredAuthLevel: AuthLevel.Admin)]
     public IActionResult Inventory()
     {
         var dummyInventory = new
@@ -24,6 +25,7 @@ public class InventoryController : ControllerBase
     }
     
     [HttpPost("addItem")]
+    [AuthorizeFilter(AuthorizationType.UserAuthLevel, requiredAuthLevel: AuthLevel.Admin)]
     public IActionResult AddItem(AddItemRequest request)
     {
         var newItem = new
@@ -37,6 +39,7 @@ public class InventoryController : ControllerBase
     }
 
     [HttpDelete("deleteItem/{id:int}")]
+    [AuthorizeFilter(AuthorizationType.UserAuthLevel, requiredAuthLevel: AuthLevel.Admin)]
     public IActionResult DeleteItem(int id)
     {
         if (id == 1)

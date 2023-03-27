@@ -18,6 +18,7 @@ export enum AuthLevel {
 export interface UserInfo {
   username?: string;
   authLevel?: AuthLevel;
+  sessionToken?: string;
 }
 
 export enum ItemTag {

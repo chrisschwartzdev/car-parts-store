@@ -66,9 +66,9 @@ export const UserControl = () => {
   const inner = !user
     ? <LoginForm />
     : (
-      <div className="login-form">
+      <Form className={styles.login}>
         <button onClick={() => logout()}>Log Out</button>
-      </div>
+      </Form>
     )
 
   return (

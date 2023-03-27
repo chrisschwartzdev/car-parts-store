@@ -1,4 +1,5 @@
 import { apiPost } from "../apiHelper";
+import { SessionManager } from "../sessionManager";
 import { LoginRequest, RegisterRequest, UserInfo } from "../types";
 
 const loginUrl = "user/login";
@@ -26,5 +27,7 @@ export class UserService {
     const response = await apiPost(logoutUrl);
     if (!response.ok)
       throw Error('Failed to logout');
+
+    SessionManager.clear();
   }
 }
