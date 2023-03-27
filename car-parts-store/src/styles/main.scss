@@ -25,7 +25,9 @@ body {
   height: 100vh;
 }
 
+a,
 .text-button {
+  text-decoration-line: none;
   background: none;
   border: none;
   color: $link-color;

@@ -6,6 +6,9 @@ const logoutUrl = "user/logout";
 const registerUrl = "user/register";
 
 export class UserService {
+  static isUserAdmin(user: UserInfo | null) {
+    return (user?.authLevel ?? 0) >= 2;
+  }
   async login(request: LoginRequest): Promise<UserInfo> {
     const response = await apiPost(loginUrl, request);
 

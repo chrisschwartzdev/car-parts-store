@@ -17,10 +17,15 @@ public class UserController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login(LoginRequest request)
     {
-        if (request.Username == "test")
-            return Ok(new {Username = "test"});
-
-        return BadRequest();
+        if (request.Username.Length < 4)
+            return BadRequest();
+        
+        var authLevel = 1;
+        
+        if (request.Username == "admin")
+            authLevel = 2;
+        
+        return Ok(new {Username = request.Username, AuthLevel = authLevel});
     }
 
     [HttpPost("register")]

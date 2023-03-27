@@ -1,20 +1,6 @@
 import { create } from "zustand";
 import { InventoryService } from "../services/inventoryService";
-
-export enum ItemTag {
-  Intake,
-  Exhaust,
-  Fueling,
-  BoltOn,
-  Turbo
-}
-
-export interface Item {
-  id: number;
-  name: string;
-  cost: number;
-  tags: ItemTag[]
-}
+import { Item } from "../types";
 
 interface InventoryState {
   items: Item[];

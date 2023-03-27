@@ -71,7 +71,7 @@ export const UserControl = () => {
 
   return (
     <div>
-      <span>{!!user ? `Hello ${user.username}!` : 'Welcome, please log in.'}</span>
+      <span>{!!user ? `Hello, ${user.username}!` : 'Welcome, please log in.'}</span>
       <button className="icon-btn fa fa-user" onClick={() => setOpen(!open)} />
       {open && inner}
     </div>

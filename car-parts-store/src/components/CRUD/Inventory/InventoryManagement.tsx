@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import useAppStore from "../../../stores/appStore";
-import useInventoryStore, { Item, ItemTag } from "../../../stores/inventoryStore";
+import useInventoryStore from "../../../stores/inventoryStore";
+import { Item, ItemTag } from "../../../types";
 import TextInput from "../../Input/TextInput";
 
 const AddItemForm = () => {

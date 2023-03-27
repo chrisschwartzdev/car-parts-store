@@ -1,5 +1,5 @@
 import { apiDelete, apiGet, apiPost } from "../apiHelper";
-import { Item } from "../stores/inventoryStore";
+import { Item } from "../types";
 
 const getInventoryUrl = "inventory";
 const addItemUrl = "inventory/addItem";
