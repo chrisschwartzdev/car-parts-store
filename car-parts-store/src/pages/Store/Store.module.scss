@@ -1,0 +1,7 @@
+.item {
+  width: 10vw;
+}
+
+:global(.grid-container) {
+  grid-template-columns: repeat(4, auto);
+}

@@ -6,7 +6,7 @@ import InventoryManagement from './components/CRUD/Inventory/InventoryManagement
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Admin from './pages/admin/Admin';
 import Home from './pages/Home';
-import Store from './pages/Store';
+import Store from './pages/Store/Store';
 import useUserStore from './stores/userStore';
 import { UserService } from './services/userService';
 
@@ -17,15 +17,15 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="App">
-        <Header />
-        {currentModal && (
-          <div id='modal-container' className='modal-container'>
-            <Modal title={currentModal.props.title}>
-              {currentModal.component}
-            </Modal>
-          </div>
-        )}
+      <Header />
+      {currentModal && (
+        <div id='modal-container' className='modal-container'>
+          <Modal title={currentModal.props.title}>
+            {currentModal.component}
+          </Modal>
+        </div>
+      )}
+      <div className='content'>
         <Routes>
           <Route>
             <Route path="/" element={<Home />} />

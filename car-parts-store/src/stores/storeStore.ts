@@ -3,15 +3,16 @@ import { StoreService } from "../services/storeService";
 import { Item, ItemSearchModel } from "../types";
 
 interface StoreState {
-  items: Item[];
+  items?: Item[];
   fetchItems: (search?: ItemSearchModel) => void;
 }
 
 const storeService = new StoreService();
 
 const useStoreStore = create<StoreState>()(set => ({
-  items: [],
+  items: undefined,
   fetchItems: async search => {
+    set(() => ({ items: undefined }))
     const inventory = await storeService.getItems(search);
     set(() => ({ items: inventory.items }))
   },

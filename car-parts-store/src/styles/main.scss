@@ -1,6 +1,8 @@
 @import "./variables.scss";
 @import "./input.scss";
 @import "./table.scss";
+@import "./grid.scss";
+@import "./util.scss";
 
 @font-face {
   font-family: "Roboto";
@@ -14,6 +16,11 @@
 body {
   background: $body-color;
   color: white;
+}
+
+.content {
+  max-width: 50vw;
+  margin: auto;
 }
 
 .modal-container {

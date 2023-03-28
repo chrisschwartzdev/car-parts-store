@@ -1,0 +1,21 @@
+.loadingContainer {
+  margin: 3rem auto;
+  font-size: 3rem;
+  width: fit-content;
+  height: fit-content;
+  .spinner {
+    animation-name: spin;
+    animation-duration: 777ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier();
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

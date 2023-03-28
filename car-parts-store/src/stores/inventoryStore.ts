@@ -3,7 +3,7 @@ import { InventoryService } from "../services/inventoryService";
 import { Item } from "../types";
 
 interface InventoryState {
-  items: Item[];
+  items?: Item[];
   fetchItems: () => void;
   addItem: (item: Item) => void;
   removeItem: (itemId: number) => void;
@@ -12,7 +12,7 @@ interface InventoryState {
 const inventoryService = new InventoryService();
 
 const useInventoryStore = create<InventoryState>()(set => ({
-  items: [],
+  items: undefined,
   fetchItems: async () => {
     const inventory = await inventoryService.getItems();
     set(() => ({ items: inventory.items }))
@@ -21,15 +21,15 @@ const useInventoryStore = create<InventoryState>()(set => ({
     await inventoryService.addItem(request)
       .then(item => set(state => ({
         ...state,
-        items: state.items.concat([item])
+        items: state.items?.concat([item])
       })))
   },
   removeItem: async (itemId: number) => {
     await inventoryService.removeItem(itemId)
       .then(() =>
         set(state => {
-          const itemIndex = state.items.findIndex(it => it.id === itemId);
-          state.items.splice(itemIndex, 1);
+          const itemIndex = state.items?.findIndex(it => it.id === itemId) ?? 0;
+          state.items?.splice(itemIndex, 1);
           return ({ ...state, items: state.items })
         }))
   }

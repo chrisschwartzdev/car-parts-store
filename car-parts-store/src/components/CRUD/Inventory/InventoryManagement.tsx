@@ -3,6 +3,7 @@ import useAppStore from "../../../stores/appStore";
 import useInventoryStore from "../../../stores/inventoryStore";
 import { Item, ItemTag } from "../../../types";
 import TextInput from "../../Input/TextInput";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 const AddItemForm = () => {
   const addItem = useInventoryStore(it => it.addItem);
@@ -43,6 +44,9 @@ const InventoryManagement = () => {
   const showModal = useAppStore(it => it.showModal);
 
   useEffect(() => { fetchItems() }, [fetchItems]);
+
+  if (!items)
+    return <LoadingSpinner />
 
   return (
     <div>
