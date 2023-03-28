@@ -10,10 +10,7 @@ public class InventoryController : ControllerBase
     [AuthorizeFilter(AuthorizationType.UserAuthLevel, requiredAuthLevel: AuthLevel.Admin)]
     public IActionResult Inventory()
     {
-        var dummyInventory = new
-        {
-            Items = new [] {new {Id = 1, Name = "Beeg Turbo", Cost= 1337, Tags = new object[]{} }}
-        };
+        var dummyInventory = new { Items = DummyData.DummyItems };
         return Ok(dummyInventory);
     }
 

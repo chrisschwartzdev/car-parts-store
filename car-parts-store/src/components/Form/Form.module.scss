@@ -1,4 +1,6 @@
 form {
-  display: flex;
-  flex-direction: column;
+  &.styled {
+    display: flex;
+    flex-direction: column;
+  }
 }

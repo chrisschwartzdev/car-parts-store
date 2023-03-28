@@ -35,3 +35,7 @@ export interface Item {
   cost: number;
   tags: ItemTag[]
 }
+
+export interface ItemSearchModel {
+  query?: string;
+}

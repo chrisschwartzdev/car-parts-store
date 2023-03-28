@@ -1,13 +1,15 @@
 import { PropsWithChildren } from "react";
-import './Form.module.scss';
+import { combineClasses } from "../../utils";
+import styles from './Form.module.scss';
 
 interface Props extends PropsWithChildren<any> {
   className?: string;
+  unstyled?: boolean;
 }
 
-const Form = ({ className, children }: Props) => {
+const Form = ({ className, children, unstyled = false }: Props) => {
   return (
-    <form className={className} onSubmit={e => e.preventDefault()}>
+    <form className={combineClasses(unstyled ? undefined : styles.styled, className)} onSubmit={e => e.preventDefault()}>
       {children}
     </form>
   )
