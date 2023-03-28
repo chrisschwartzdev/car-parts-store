@@ -1,5 +1,5 @@
-$primary-hue: 20;
-$primary-color: hsl($primary-hue, 30%, 50%);
+$primary-hue: 10;
+$primary-color: hsl($primary-hue, 5%, 35%);
 
 $alt-body-color: scale-color($primary-color, $saturation: -20%, $lightness: -30%);
 $body-color: scale-color($primary-color, $saturation: -50%, $lightness: -55%);
