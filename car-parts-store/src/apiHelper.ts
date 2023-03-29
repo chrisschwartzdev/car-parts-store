@@ -39,7 +39,7 @@ export const apiPost = async (url = "", data = {}) => {
 }
 
 export const apiGet = async (url: string, query: any = null) => {
-  const queryString = stringify(query)
+  const queryString = stringify(query);
   const response = await fetch(`${apiRoot}${url}?${queryString}`, getRequestInit("GET"));
   catchUnauthorize(response);
   return { ok: response.ok, status: response.status, data: await mapResponseData(response) };

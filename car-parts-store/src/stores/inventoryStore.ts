@@ -11,7 +11,7 @@ interface InventoryState {
 
 const inventoryService = new InventoryService();
 
-const useInventoryStore = create<InventoryState>()(set => ({
+const useInventoryStore = create<InventoryState>(set => ({
   items: undefined,
   fetchItems: async () => {
     const inventory = await inventoryService.getItems();

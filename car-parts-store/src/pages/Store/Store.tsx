@@ -8,10 +8,11 @@ import { ItemSearchModel } from "../../types";
 import { combineClasses } from "../../utils";
 
 const Store = () => {
-  const { items, fetchItems } = useStoreStore(it => ({ items: it.items, fetchItems: it.fetchItems }))
-  const [search, setSearch] = useState<ItemSearchModel>({});
+  const { items, fetchItems, query } = useStoreStore(it => ({ items: it.items, fetchItems: it.fetchItems, query: it.query }))
+  const [search, setSearch] = useState<ItemSearchModel>({ query });
 
-  useEffect(() => { fetchItems() }, [fetchItems])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { fetchItems(search) }, [fetchItems])
 
   const handleSearchClicked = useCallback(() => {
     fetchItems(search)
@@ -20,7 +21,7 @@ const Store = () => {
   return (
     <div>
       <Form unstyled>
-        <TextInput autoFocus placeholder="Enter keywords..." onChange={val => setSearch({ ...search, query: val })} />
+        <TextInput autoFocus placeholder="Enter keywords..." onChange={val => setSearch({ ...search, query: val })} initialValue={search.query} />
         <button type="submit" onClick={handleSearchClicked}><i className="fa fa-magnifying-glass" /></button>
       </Form>
       {!items && <LoadingIndicator />}
