@@ -24,7 +24,7 @@ const Store = () => {
         <button type="submit" onClick={handleSearchClicked}><i className="fa fa-magnifying-glass" /></button>
       </Form>
       {!items && <LoadingIndicator />}
-      <div className={'grid-container'}>
+      <div className={combineClasses(styles.grid, 'grid-container')}>
         {!!items &&
           items?.map(item => (
             // todo: remove grid-item class if not needed

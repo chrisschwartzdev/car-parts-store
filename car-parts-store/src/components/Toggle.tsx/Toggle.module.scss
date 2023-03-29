@@ -1,0 +1,6 @@
+.toggleIconButton {
+  &[data-active="true"] {
+    background: transparentize($color: black, $amount: 0.8);
+    color: white;
+  }
+}

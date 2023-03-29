@@ -4,6 +4,7 @@ import useUserStore from "../../stores/userStore";
 import { LoginRequest, RegisterRequest } from "../../types";
 import Form from "../Form/Form";
 import TextInput from "../Input/TextInput";
+import ToggleIconButton from "../Toggle.tsx/ToggleIconButton";
 import styles from './UserControl.module.scss';
 
 const validateLogin = <T extends RegisterRequest | LoginRequest>({ username, password }: Partial<T>) => {
@@ -33,7 +34,7 @@ const RegisterForm = () => {
       <TextInput placeholder="Username" onChange={val => setState({ ...state, username: val })} autoFocus />
       <div className="display-flex">
         <TextInput className="flex-grow" placeholder="Password" type={passwordVisible ? undefined : "password"} onChange={val => setState({ ...state, password: val })} />
-        <button type="button" className="icon-btn flex-end" onClick={() => setPasswordVisible(!passwordVisible)}><i className="fa fa-eye" /></button>
+        <ToggleIconButton type="button" className="flex-end" onChange={val => setPasswordVisible(val)}><i className="fa fa-eye" /></ToggleIconButton>
       </div>
       <button disabled={!valid} onClick={() => register(state as RegisterRequest)}>Submit</button>
     </Form>
