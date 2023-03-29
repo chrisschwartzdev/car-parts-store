@@ -3,10 +3,9 @@ import { UserService } from "../services/userService";
 import { SessionManager } from "../sessionManager";
 import { LoginRequest, RegisterRequest, UserInfo } from "../types";
 
-
 interface UserState {
   user: UserInfo | null;
-  login: (request: LoginRequest) => void;
+  login: (request: LoginRequest) => Promise<void>;
   register: (request: RegisterRequest) => void;
   logout: () => void;
   registerSent: boolean;
@@ -14,19 +13,19 @@ interface UserState {
 
 const userService = new UserService();
 
-const useUserStore = create<UserState>()(set => {
+const useUserStore = create<UserState>(set => {
   return ({
     user: SessionManager.get(),
     registerSent: false,
     login: async request => {
-      await userService.login(request)
+      new Promise(async () => await userService.login(request)
         .then(user => {
           SessionManager.set(user);
           set(state => ({
             ...state,
             user: user
           }))
-        })
+        }))
     },
     register: async request => {
       await userService.register(request)
