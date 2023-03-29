@@ -3,7 +3,7 @@ import { UserService } from "../services/userService";
 import { SessionManager } from "../sessionManager";
 import { LoginRequest, RegisterRequest, UserInfo } from "../types";
 
-interface UserState {
+interface State {
   user: UserInfo | null;
   login: (request: LoginRequest) => Promise<void>;
   register: (request: RegisterRequest) => void;
@@ -13,7 +13,7 @@ interface UserState {
 
 const userService = new UserService();
 
-const useUserStore = create<UserState>(set => {
+const useUserStore = create<State>(set => {
   return ({
     user: SessionManager.get(),
     registerSent: false,

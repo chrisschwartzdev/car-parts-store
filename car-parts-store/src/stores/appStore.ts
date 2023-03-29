@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { ModalComponent } from "../components/Modal/Modal";
 
-interface AppState {
+interface State {
   modals: ModalComponent[];
   showModal: (modal: ModalComponent) => void;
   popModal: VoidFunction;
 }
 
-const useAppStore = create<AppState>()(set => ({
+const useAppStore = create<State>()(set => ({
   modals: [],
   showModal: modal => {
     set(state => ({ modals: state.modals.concat([modal]) }))

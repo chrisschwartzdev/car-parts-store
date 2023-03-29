@@ -28,8 +28,7 @@ const Store = () => {
       <div className={combineClasses(styles.grid, 'grid-container')}>
         {!!items &&
           items?.map(item => (
-            // todo: remove grid-item class if not needed
-            <div key={`grid-item-${item.id}-${item.name}`} className={combineClasses(styles.item, "grid-item")}>
+            <div key={`grid-item-${item.id}-${item.name}`} className={styles.item}>
               <div>{item.name}</div>
               <div>${item.cost}</div>
             </div>

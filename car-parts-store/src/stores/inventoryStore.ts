@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { InventoryService } from "../services/inventoryService";
 import { Item } from "../types";
 
-interface InventoryState {
+interface State {
   items?: Item[];
   fetchItems: () => void;
   addItem: (item: Item) => void;
@@ -11,7 +11,7 @@ interface InventoryState {
 
 const inventoryService = new InventoryService();
 
-const useInventoryStore = create<InventoryState>(set => ({
+const useInventoryStore = create<State>(set => ({
   items: undefined,
   fetchItems: async () => {
     const inventory = await inventoryService.getItems();
