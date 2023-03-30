@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Store from './pages/Store/Store';
 import useUserStore from './stores/userStore';
 import { UserService } from './services/userService';
+import StoreResetter from './components/utils/StoreResetter';
 
 const App = () => {
   const modals = useAppStore(it => it.modals);
@@ -17,6 +18,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <StoreResetter />
       <Header />
       {currentModal && (
         <div id='modal-container' className='modal-container'>

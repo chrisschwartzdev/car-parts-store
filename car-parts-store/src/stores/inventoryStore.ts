@@ -15,7 +15,7 @@ const useInventoryStore = create<State>(set => ({
   items: undefined,
   fetchItems: async () => {
     const inventory = await inventoryService.getItems();
-    set(() => ({ items: inventory.items }))
+    set({ items: inventory.items })
   },
   addItem: async (request: Item) => {
     await inventoryService.addItem(request)

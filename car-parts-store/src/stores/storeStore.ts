@@ -7,20 +7,22 @@ interface State {
   query?: string;
   items?: Item[];
   fetchItems: (search?: ItemSearchModel) => void;
+  resetQuery: VoidFunction;
 }
 
 const storeService = new StoreService();
 
 const useStoreStore = create<State>(
-  querystring(
-    (set) => ({
+  querystring<State, [], []>(
+    set => ({
       query: "",
       items: undefined,
       fetchItems: async search => {
-        set(() => ({ items: undefined, query: search?.query }))
+        set({ items: undefined, query: search?.query })
         const inventory = await storeService.getItems(search);
-        set(() => ({ items: inventory.items }))
+        set({ items: inventory.items })
       },
+      resetQuery: () => set({ query: "" })
     }),
     {
       select(_: string) {
