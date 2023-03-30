@@ -1,11 +1,7 @@
 import { apiGet } from "../apiHelper";
-import { Item, ItemSearchModel } from "../types";
+import { ItemSearchModel, Store } from "../types";
 
 const getItemsUrl = "store/items";
-
-interface Store {
-  items: Item[];
-}
 
 export class StoreService {
   async getItems(search?: ItemSearchModel): Promise<Store> {

@@ -12,14 +12,6 @@ describe('userStore', () => {
   it("logs in properly", async () => {
     const { result } = renderHook(() => useUserStore(it => it));
     await result.current.login({ username: 'TestUser', password: 'password' });
-
-    await waitFor(() => expect(result.current.user?.username).toBe('TestUser'));
-  })
-
-  it("logs in properly2", async () => {
-    const { result } = renderHook(() => useUserStore(it => it));
-    await result.current.login({ username: 'TestUser', password: 'password' });
-
     await waitFor(() => expect(result.current.user?.username).toBe('TestUser'));
   })
 })

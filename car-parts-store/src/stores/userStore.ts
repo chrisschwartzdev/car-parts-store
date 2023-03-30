@@ -11,6 +11,15 @@ interface State {
   registerSent: boolean;
 }
 
+export const validateLogin = <T extends RegisterRequest | LoginRequest>({ username, password }: Partial<T>) => {
+  if ((username || '').length < 4)
+    return false;
+  if ((password || '').length < 6)
+    return false;
+
+  return true;
+}
+
 const userService = new UserService();
 
 const useUserStore = create<State>(set => {

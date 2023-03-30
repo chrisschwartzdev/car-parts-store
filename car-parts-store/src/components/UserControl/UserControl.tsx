@@ -1,20 +1,11 @@
 import { useEffect, useState } from "react"
 import useAppStore from "../../stores/appStore";
-import useUserStore from "../../stores/userStore";
+import useUserStore, { validateLogin } from "../../stores/userStore";
 import { LoginRequest, RegisterRequest } from "../../types";
 import Form from "../Form/Form";
 import TextInput from "../Input/TextInput";
 import ToggleIconButton from "../Toggle.tsx/ToggleIconButton";
 import styles from './UserControl.module.scss';
-
-const validateLogin = <T extends RegisterRequest | LoginRequest>({ username, password }: Partial<T>) => {
-  if ((username || '').length < 4)
-    return false;
-  if ((password || '').length < 6)
-    return false;
-
-  return true;
-}
 
 const RegisterForm = () => {
   const [state, setState] = useState<Partial<RegisterRequest>>({});

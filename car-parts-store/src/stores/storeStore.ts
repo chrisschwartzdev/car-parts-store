@@ -6,7 +6,7 @@ import { querystring } from "zustand-querystring";
 interface State {
   query?: string;
   items?: Item[];
-  fetchItems: (search?: ItemSearchModel) => void;
+  fetchItems: (search?: ItemSearchModel) => Promise<void>;
   resetQuery: VoidFunction;
 }
 

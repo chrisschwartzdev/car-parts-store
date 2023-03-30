@@ -39,3 +39,7 @@ export interface Item {
 export interface ItemSearchModel {
   query?: string;
 }
+
+export interface Store {
+  items: Item[];
+}
