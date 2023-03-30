@@ -8,11 +8,11 @@ namespace CarPartsStore.Controllers;
 [Route("[controller]")]
 public class StoreController : ControllerBase
 {
-    private readonly ItemService _itemService;
+    private readonly IItemService _itemService;
 
-    public StoreController()
+    public StoreController(IItemService itemService)
     {
-        _itemService = new ItemService();
+        _itemService = itemService;
     }
     
     [HttpGet("items")]

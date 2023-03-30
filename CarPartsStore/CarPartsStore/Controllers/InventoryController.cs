@@ -8,11 +8,11 @@ namespace CarPartsStore.Controllers;
 [Route("[controller]")]
 public class InventoryController : ControllerBase
 {
-    private readonly ItemService _itemService;
+    private readonly IItemService _itemService;
 
-    public InventoryController()
+    public InventoryController(IItemService itemService)
     {
-        _itemService = new ItemService();
+        _itemService = itemService;
     }
     
     [HttpGet]
@@ -52,9 +52,7 @@ public class InventoryController : ControllerBase
     [AuthorizeFilter(AuthorizationType.UserAuthLevel, requiredAuthLevel: AuthLevel.Admin)]
     public IActionResult DeleteItem(int id)
     {
-        if (id == 1)
-            return BadRequest();
-        
-        return Ok();
+        var result = _itemService.DeleteItem(id);
+        return result ? Ok() : Problem();
     }
 }

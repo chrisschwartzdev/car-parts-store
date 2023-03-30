@@ -2,23 +2,50 @@ using DataLayer.Models;
 
 namespace DataLayer;
 
-public class ItemRepository
+public interface IItemRepository
 {
+    IEnumerable<Item> LoadItems();
+    bool AddItem(Item item);
+    bool DeleteItem(int id);
+}
+
+public class ItemRepository : IItemRepository
+{
+    private readonly CarpartsstoreContext _context;
+
+    public ItemRepository(CarpartsstoreContext context)
+    {
+        _context = context;
+    }
+    
     public IEnumerable<Item> LoadItems()
     {
-        using var db = new CarpartsstoreContext();
-        return db.Items.ToList();
+        return _context.Items.ToList();
     }
 
     public bool AddItem(Item item)
     {
-        using var db = new CarpartsstoreContext();
         try
         {
-            var id = db.Items.Max(x => x.Id) + 1;
+            var id = _context.Items.Max(x => x.Id) + 1;
             item.Id = id;
-            db.Items.Add(item);
-            db.SaveChanges();
+            _context.Items.Add(item);
+            _context.SaveChanges(); // todo: make async
+        }
+        catch
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool DeleteItem(int id)
+    {
+        try
+        {
+            _context.Items.Remove(_context.Items.Single(x => x.Id == id));
+            _context.SaveChanges();
         }
         catch
         {

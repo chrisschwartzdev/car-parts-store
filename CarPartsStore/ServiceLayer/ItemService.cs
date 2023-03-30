@@ -3,16 +3,24 @@ using DataLayer.Models;
 
 namespace ServiceLayer;
 
-public class ItemService
+public interface IItemService
 {
-    private readonly ItemRepository _itemRepository;
+    IEnumerable<Item> GetItems();
+    bool AddItem(Item item);
+    bool DeleteItem(int id);
+}
 
-    public ItemService()
+public class ItemService : IItemService
+{
+    private readonly IItemRepository _itemRepository;
+
+    public ItemService(IItemRepository itemRepository)
     {
-        _itemRepository = new ItemRepository();
+        _itemRepository = itemRepository;
     }
 
     public IEnumerable<Item> GetItems() => _itemRepository.LoadItems();
 
     public bool AddItem(Item item) => _itemRepository.AddItem(item);
+    public bool DeleteItem(int id) => _itemRepository.DeleteItem(id);
 }

@@ -1,8 +1,13 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using CarPartsStore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule<ApplicationModule>());
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
