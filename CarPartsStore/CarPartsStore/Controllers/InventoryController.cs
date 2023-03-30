@@ -1,4 +1,6 @@
+using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer;
 
 namespace CarPartsStore.Controllers;
 
@@ -6,12 +8,19 @@ namespace CarPartsStore.Controllers;
 [Route("[controller]")]
 public class InventoryController : ControllerBase
 {
+    private readonly ItemService _itemService;
+
+    public InventoryController()
+    {
+        _itemService = new ItemService();
+    }
+    
     [HttpGet]
     [AuthorizeFilter(AuthorizationType.UserAuthLevel, requiredAuthLevel: AuthLevel.Admin)]
     public IActionResult Inventory()
     {
-        var dummyInventory = new { Items = DummyData.DummyItems };
-        return Ok(dummyInventory);
+        var items = _itemService.GetItems();
+        return Ok(new { Items = items });
     }
 
     public class AddItemRequest
@@ -25,14 +34,18 @@ public class InventoryController : ControllerBase
     [AuthorizeFilter(AuthorizationType.UserAuthLevel, requiredAuthLevel: AuthLevel.Admin)]
     public IActionResult AddItem(AddItemRequest request)
     {
-        var newItem = new
+        if (request == null)
+            return BadRequest();
+
+        var item = new Item
         {
-            Id = 2000,
             Name = request.Name,
-            Cost = request.Cost,
-            Tags = request.Tags
+            Cost = request.Cost
         };
-        return Ok(newItem);
+
+        var result = _itemService.AddItem(item);
+
+        return result ? Ok(item) : Problem(); // todo: Throw exception in other layers, add exception handler
     }
 
     [HttpDelete("deleteItem/{id:int}")]

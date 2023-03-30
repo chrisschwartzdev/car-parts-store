@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPartsStore", "CarPartsStore\CarPartsStore.csproj", "{4F9E3D7B-63CD-42D4-9792-9AECB251867A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{8EDE6DDD-015F-44D9-8983-82AAF48FAC09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayer", "ServiceLayer\ServiceLayer.csproj", "{0E535475-B161-451F-8D7A-86ADC217F801}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{4F9E3D7B-63CD-42D4-9792-9AECB251867A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F9E3D7B-63CD-42D4-9792-9AECB251867A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F9E3D7B-63CD-42D4-9792-9AECB251867A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EDE6DDD-015F-44D9-8983-82AAF48FAC09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EDE6DDD-015F-44D9-8983-82AAF48FAC09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EDE6DDD-015F-44D9-8983-82AAF48FAC09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EDE6DDD-015F-44D9-8983-82AAF48FAC09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E535475-B161-451F-8D7A-86ADC217F801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E535475-B161-451F-8D7A-86ADC217F801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E535475-B161-451F-8D7A-86ADC217F801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E535475-B161-451F-8D7A-86ADC217F801}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

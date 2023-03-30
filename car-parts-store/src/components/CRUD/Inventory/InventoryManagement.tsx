@@ -67,7 +67,7 @@ const InventoryManagement = () => {
               <td>{item.id}</td>
               <td>{item.name}</td>
               <td>{item.cost}</td>
-              <td>{item.tags.map(it => ItemTag[it]).join(', ')}</td>
+              <td>{item.tags?.map(it => ItemTag[it]).join(', ')}</td>
               <td>
                 <button className="icon-btn" onClick={() => showModal({ component: <RemoveItemForm item={item} />, props: { title: `Are you sure you want to delete "${item.name}"?` } })}><i className="fa fa-trash" /></button>
               </td>
