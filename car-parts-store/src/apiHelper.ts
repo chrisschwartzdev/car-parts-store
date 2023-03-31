@@ -1,7 +1,7 @@
 import { stringify } from "qs";
 import { SessionManager } from "./sessionManager";
 
-const mapResponseData = async (response: Response) => response.headers.has('content-type') ? await response.json() : null;
+const mapResponseData = async (response: Response) => response.ok && response.headers.has('content-type') ? await response.json() : null;
 
 const dataMethods = ["POST", "PUT"]
 const getRequestInit = (method: "POST" | "GET" | "PUT" | "DELETE", data?: any): RequestInit => {
@@ -32,9 +32,17 @@ const catchUnauthorize = (response: Response) => {
   document.location = '/';
 }
 
+const catchError = async (response: Response) => {
+  if (!response.ok) {
+    const err = await response.text();
+    throw Error(err);
+  }
+}
+
 export const apiPost = async (url = "", data = {}) => {
   const response = await fetch(apiRoot + url, getRequestInit("POST", data));
   catchUnauthorize(response);
+  await catchError(response);
   return { ok: response.ok, status: response.status, data: await mapResponseData(response) };
 }
 
@@ -42,11 +50,13 @@ export const apiGet = async (url: string, query: any = null) => {
   const queryString = stringify(query);
   const response = await fetch(`${apiRoot}${url}?${queryString}`, getRequestInit("GET"));
   catchUnauthorize(response);
+  await catchError(response);
   return { ok: response.ok, status: response.status, data: await mapResponseData(response) };
 }
 
 export const apiDelete = async (url = "", query = "") => {
   const response = await fetch(`${apiRoot}${url}/${query}`, getRequestInit("DELETE"));
   catchUnauthorize(response);
+  await catchError(response);
   return { ok: response.ok, status: response.status, data: await mapResponseData(response) };
 }

@@ -1,47 +1,58 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useAppStore from "../../../stores/appStore";
 import useInventoryStore from "../../../stores/inventoryStore";
 import { Item, ItemTag } from "../../../types";
+import Form from "../../Form/Form";
 import TextInput from "../../Input/TextInput";
-import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+import LoadingSpinner, { LoadingSpinnerOrNode } from "../../LoadingSpinner/LoadingSpinner";
 
 const AddItemForm = () => {
-  const addItem = useInventoryStore(it => it.addItem);
-  const popModal = useAppStore(it => it.popModal);
+  const { addItem, loadingState, subscribe, unsubscribe } = useInventoryStore();
+  const { popModal } = useAppStore();
   const [state, setState] = useState<Partial<Item>>({ id: 0, name: "New Item", cost: 0, tags: [] })
+
+  const error = useRef<Error | undefined>();
+
+  useEffect(() => {
+    const key = subscribe(err => {
+      error.current = err;
+      if (!err)
+        popModal();
+    })
+    return () => unsubscribe(key)
+  }, [popModal, subscribe, unsubscribe])
 
   const handleConfirm = useCallback(() => {
     addItem(state as Item);
-    popModal();
-  }, [addItem, state, popModal])
+  }, [addItem, state])
+
+  const loading = loadingState === "add";
 
   return (
-    <div>
-      <TextInput placeholder="Item Name" onChange={(val) => setState({ ...state, name: val })} initialValue={state.name} />
-      <button onClick={handleConfirm}>Submit</button>
-    </div>
+    <Form unstyled>
+      <TextInput placeholder="Item Name" autoFocus onChange={(val) => setState({ ...state, name: val })} initialValue={state.name} />
+      <button onClick={handleConfirm} disabled={loading}><LoadingSpinnerOrNode loading={loading}>Submit</LoadingSpinnerOrNode></button>
+    </Form>
   )
 }
 
 const RemoveItemForm = ({ item }: { item: Item }) => {
-  const removeItem = useInventoryStore(it => it.removeItem);
-  const popModal = useAppStore(it => it.popModal);
+  const { removeItem, loadingState } = useInventoryStore();
+  const { popModal } = useAppStore();
 
   const handleConfirm = useCallback(() => {
     removeItem(item.id);
     popModal();
   }, [item.id, popModal, removeItem])
 
-  return (
-    <div>
-      <button onClick={handleConfirm}>Confirm Deletion</button>
-    </div>
-  )
+  const loading = loadingState === "remove";
+
+  return <button onClick={handleConfirm} disabled={loading}><LoadingSpinnerOrNode loading={loading}>Confirm Deletion</LoadingSpinnerOrNode></button>
 }
 
 const InventoryManagement = () => {
-  const { items, fetchItems } = useInventoryStore(it => ({ items: it.items, fetchItems: it.fetchItems }));
-  const showModal = useAppStore(it => it.showModal);
+  const { items, fetchItems } = useInventoryStore();
+  const { showModal } = useAppStore();
 
   useEffect(() => { fetchItems() }, [fetchItems]);
 

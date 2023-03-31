@@ -5,7 +5,7 @@ import TextInput from "../../components/Input/TextInput";
 import LoadingIndicator from "../../components/LoadingSpinner/LoadingSpinner";
 import useStoreStore from "../../stores/storeStore";
 import { ItemSearchModel } from "../../types";
-import { combineClasses } from "../../utils";
+import { combineClasses } from "../../utils/utils";
 
 const Store = () => {
   const { items, fetchItems, query } = useStoreStore(it => ({ items: it.items, fetchItems: it.fetchItems, query: it.query }))

@@ -12,22 +12,13 @@ export class UserService {
   }
   async login(request: LoginRequest): Promise<UserInfo> {
     const response = await apiPost(loginUrl, request);
-
-    if (!response.ok)
-      throw Error('Login failed');
-
     return response.data;
   }
   async register(request: RegisterRequest) {
-    const response = await apiPost(registerUrl, request);
-    if (!response.ok)
-      throw Error('Failed to register');
+    await apiPost(registerUrl, request);
   }
   async logout() {
-    const response = await apiPost(logoutUrl);
-    if (!response.ok)
-      throw Error('Failed to logout');
-
+    await apiPost(logoutUrl);
     SessionManager.clear();
   }
 }

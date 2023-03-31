@@ -1,8 +1,14 @@
 .loadingContainer {
-  margin: 3rem auto;
-  font-size: 3rem;
   width: fit-content;
   height: fit-content;
+  margin: auto;
+  &.small {
+    font-size: small;
+  }
+  &.large {
+    font-size: 3rem;
+    margin: 3rem auto;
+  }
   .spinner {
     animation-name: spin;
     animation-duration: 777ms;

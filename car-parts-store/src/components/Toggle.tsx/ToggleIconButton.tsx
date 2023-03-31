@@ -1,5 +1,5 @@
 import { PropsWithChildren, useCallback, useState } from 'react';
-import { combineClasses } from '../../utils';
+import { combineClasses } from '../../utils/utils';
 import styles from './Toggle.module.scss';
 
 interface Props extends PropsWithChildren<any> {

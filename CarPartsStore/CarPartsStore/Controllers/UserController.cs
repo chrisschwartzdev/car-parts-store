@@ -37,7 +37,7 @@ public class UserController : ControllerBase
         if (request.Username == "test")
             return Ok();
 
-        return BadRequest();
+        return BadRequest("Username was not test (for testing purposes, obviously)");
     }
     
     [HttpPost("logout")]

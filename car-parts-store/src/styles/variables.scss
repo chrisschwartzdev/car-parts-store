@@ -14,3 +14,9 @@ $link-color-hover: lighten($link-color, 15%);
   border: solid $border-color 1px;
   border-radius: $border-radius;
 }
+
+$negative-color: hsl(0, 50%, 50%);
+
+.negative {
+  color: $negative-color;
+}

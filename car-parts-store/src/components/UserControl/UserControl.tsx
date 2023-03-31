@@ -1,24 +1,32 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import useAppStore from "../../stores/appStore";
 import useUserStore, { validateLogin } from "../../stores/userStore";
 import { LoginRequest, RegisterRequest } from "../../types";
 import Form from "../Form/Form";
 import TextInput from "../Input/TextInput";
+import { LoadingSpinnerOrNode } from "../LoadingSpinner/LoadingSpinner";
 import ToggleIconButton from "../Toggle.tsx/ToggleIconButton";
 import styles from './UserControl.module.scss';
 
 const RegisterForm = () => {
   const [state, setState] = useState<Partial<RegisterRequest>>({});
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { register, registerSent } = useUserStore(it => ({ register: it.register, registerSent: it.registerSent }));
-  const popModal = useAppStore(it => it.popModal);
+  const { register, loadingState, subscribe, unsubscribe } = useUserStore();
+  const { popModal } = useAppStore();
 
-  useEffect(() => {
-    if (registerSent)
-      popModal();
-  }, [popModal, registerSent])
+  let error = useRef<Error | undefined>();
+
+  useEffect(() => { // todo: reduce boilerplate for this somehow?
+    const key = subscribe(err => {
+      error.current = err;
+      if (!err)
+        popModal();
+    })
+    return () => unsubscribe(key)
+  }, [popModal, subscribe, unsubscribe])
 
   const valid = validateLogin<RegisterRequest>(state);
+  const loading = loadingState === "register";
 
   return (
     <Form className={styles.register}>
@@ -27,23 +35,25 @@ const RegisterForm = () => {
         <TextInput className="flex-grow" placeholder="Password" type={passwordVisible ? undefined : "password"} onChange={val => setState({ ...state, password: val })} />
         <ToggleIconButton type="button" className="flex-end" onChange={val => setPasswordVisible(val)}><i className="fa fa-eye" /></ToggleIconButton>
       </div>
-      <button disabled={!valid} onClick={() => register(state as RegisterRequest)}>Submit</button>
+      {error.current && <p className="negative">{error.current.message}</p>}
+      <button disabled={!valid || loading} onClick={() => register(state as RegisterRequest)}><LoadingSpinnerOrNode loading={loading}>Submit</LoadingSpinnerOrNode></button>
     </Form>
   )
 }
 
 const LoginForm = () => {
   const [state, setState] = useState<LoginRequest>({ username: '', password: '' });
-  const login = useUserStore(it => it.login);
+  const { login, loadingState } = useUserStore();
   const showModal = useAppStore(it => it.showModal);
 
   const valid = validateLogin<LoginRequest>(state);
+  const loading = loadingState === "login";
 
   return (
     <Form className={styles.login}>
       <TextInput placeholder="Username" onChange={val => setState({ ...state, username: val })} autoFocus />
       <TextInput placeholder="Password" onChange={val => setState({ ...state, password: val })} type="password" />
-      <button disabled={!valid} onClick={() => login(state)}>Login</button>
+      <button disabled={!valid || loading} onClick={() => login(state)}><LoadingSpinnerOrNode loading={loading}>Login</LoadingSpinnerOrNode></button>
       <button type="button" className='text-button' onClick={() => showModal({ component: <RegisterForm />, props: { title: "Register" } })}>New here? Register.</button>
     </Form>
   )
@@ -51,7 +61,7 @@ const LoginForm = () => {
 
 export const UserControl = () => {
   const [open, setOpen] = useState(false);
-  const { user, logout } = useUserStore(it => ({ user: it.user, logout: it.logout }));
+  const { user, logout, loadingState } = useUserStore();
 
   useEffect(() => setOpen(false), [user])
 
@@ -59,7 +69,7 @@ export const UserControl = () => {
     ? <LoginForm />
     : (
       <Form className={styles.login}>
-        <button onClick={() => logout()}>Log Out</button>
+        <button onClick={logout}><LoadingSpinnerOrNode loading={loadingState === "logout"}>Log Out</LoadingSpinnerOrNode></button>
       </Form>
     )
 
