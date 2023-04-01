@@ -12,14 +12,6 @@ interface State extends SubscriptionModel {
   loadingState?: "login" | "register" | "logout";
 }
 
-export const validateLogin = <T extends RegisterRequest | LoginRequest>({ username, password }: Partial<T>) => {
-  if ((username || '').length < 4)
-    return false;
-  if ((password || '').length < 6)
-    return false;
-  return true;
-}
-
 const userService = new UserService();
 
 const useUserStore = create<State>(set => {
@@ -27,7 +19,6 @@ const useUserStore = create<State>(set => {
   return ({
     ...sm.getFunctions(),
     user: SessionManager.get(),
-    registerSent: false,
     login: async request => {
       set({ loadingState: "login" });
       return await userService.login(request)

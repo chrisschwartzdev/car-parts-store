@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useAppStore from "../../../stores/appStore";
 import useInventoryStore from "../../../stores/inventoryStore";
 import { Item, ItemTag } from "../../../types";
+import { useSubscriptionModel } from "../../../utils/SubscriptionManager";
 import Form from "../../Form/Form";
 import TextInput from "../../Input/TextInput";
 import LoadingSpinner, { LoadingSpinnerOrNode } from "../../LoadingSpinner/LoadingSpinner";
@@ -11,27 +12,14 @@ const AddItemForm = () => {
   const { popModal } = useAppStore();
   const [state, setState] = useState<Partial<Item>>({ id: 0, name: "New Item", cost: 0, tags: [] })
 
-  const error = useRef<Error | undefined>();
-
-  useEffect(() => {
-    const key = subscribe(err => {
-      error.current = err;
-      if (!err)
-        popModal();
-    })
-    return () => unsubscribe(key)
-  }, [popModal, subscribe, unsubscribe])
-
-  const handleConfirm = useCallback(() => {
-    addItem(state as Item);
-  }, [addItem, state])
-
+  const errorRef = useSubscriptionModel(popModal, subscribe, unsubscribe);
   const loading = loadingState === "add";
 
   return (
     <Form unstyled>
       <TextInput placeholder="Item Name" autoFocus onChange={(val) => setState({ ...state, name: val })} initialValue={state.name} />
-      <button onClick={handleConfirm} disabled={loading}><LoadingSpinnerOrNode loading={loading}>Submit</LoadingSpinnerOrNode></button>
+      {errorRef.current && <p className="negative">{errorRef.current.message}</p>}
+      <button onClick={() => addItem(state as Item)} disabled={loading}><LoadingSpinnerOrNode loading={loading}>Submit</LoadingSpinnerOrNode></button>
     </Form>
   )
 }

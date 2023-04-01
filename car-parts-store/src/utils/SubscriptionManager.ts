@@ -1,6 +1,20 @@
+import { useEffect, useRef } from "react";
 import KeyedCollection from "./KeyedCollection";
 
 type ResultSubscriber = (err?: Error) => void
+
+export const useSubscriptionModel = (onComplete: VoidFunction, subscribe: (fn: ResultSubscriber) => number, unsubscribe: (key: number) => void) => {
+  const error = useRef<Error | undefined>();
+  useEffect(() => {
+    const key = subscribe(err => {
+      error.current = err;
+      if (!err)
+        onComplete();
+    })
+    return () => unsubscribe(key)
+  }, [onComplete, subscribe, unsubscribe])
+  return error;
+}
 
 export interface SubscriptionModel {
   subscribe: (fn: ResultSubscriber) => number;

@@ -30,6 +30,7 @@ const useStoreStore = create<State>(
           query: true
         }
       }
-    }))
+    })
+)
 
 export default useStoreStore;

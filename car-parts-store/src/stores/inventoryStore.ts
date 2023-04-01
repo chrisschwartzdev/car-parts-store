@@ -27,9 +27,7 @@ const useInventoryStore = create<State>(set => {
       await inventoryService.addItem(request)
         .then(item => {
           sm.publishResult();
-          set(state => ({
-            items: state.items?.concat([item])
-          }))
+          set(state => ({ items: state.items?.concat([item]) }))
         })
         .catch(sm.publishResult)
     },

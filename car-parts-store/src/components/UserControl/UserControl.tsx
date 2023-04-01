@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
+import { validateLogin } from "../../services/userService";
 import useAppStore from "../../stores/appStore";
-import useUserStore, { validateLogin } from "../../stores/userStore";
+import useUserStore from "../../stores/userStore";
 import { LoginRequest, RegisterRequest } from "../../types";
+import { useSubscriptionModel } from "../../utils/SubscriptionManager";
 import Form from "../Form/Form";
 import TextInput from "../Input/TextInput";
 import { LoadingSpinnerOrNode } from "../LoadingSpinner/LoadingSpinner";
@@ -14,17 +16,7 @@ const RegisterForm = () => {
   const { register, loadingState, subscribe, unsubscribe } = useUserStore();
   const { popModal } = useAppStore();
 
-  let error = useRef<Error | undefined>();
-
-  useEffect(() => { // todo: reduce boilerplate for this somehow?
-    const key = subscribe(err => {
-      error.current = err;
-      if (!err)
-        popModal();
-    })
-    return () => unsubscribe(key)
-  }, [popModal, subscribe, unsubscribe])
-
+  const errorRef = useSubscriptionModel(popModal, subscribe, unsubscribe);
   const valid = validateLogin<RegisterRequest>(state);
   const loading = loadingState === "register";
 
@@ -35,7 +27,7 @@ const RegisterForm = () => {
         <TextInput className="flex-grow" placeholder="Password" type={passwordVisible ? undefined : "password"} onChange={val => setState({ ...state, password: val })} />
         <ToggleIconButton type="button" className="flex-end" onChange={val => setPasswordVisible(val)}><i className="fa fa-eye" /></ToggleIconButton>
       </div>
-      {error.current && <p className="negative">{error.current.message}</p>}
+      {errorRef.current && <p className="negative">{errorRef.current.message}</p>}
       <button disabled={!valid || loading} onClick={() => register(state as RegisterRequest)}><LoadingSpinnerOrNode loading={loading}>Submit</LoadingSpinnerOrNode></button>
     </Form>
   )
